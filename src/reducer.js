@@ -10,7 +10,7 @@ const previousAttemptedLetters = (attemptedLetters, letter) => {
   return attemptedLetters.indexOf(letter) >= 0
 }
 
-const isLetterPresentAtWord = (word, letter) => {
+const isLetterPresent = (word, letter) => {
   return word.indexOf(letter) >= 0
 }
 
@@ -27,18 +27,29 @@ export default (state, action) => {
   state = state || initialState;
   if (action.type === NEW_GAME) {
     const newWord = action.payload;
-    const
-    state = Object.assign({
-    }, initialState, {
-      word: action.payload,//random word from API
-      guessedWord: '',
-       //
-    })
-    return state;
+    const newAttemptedLetters = [];
+    return {
+      word: newWord,
+      guessedWord: generateGuessedWord(newWord, newAttemptedLetters),
+      attemptedLetters: newAttemptedLetters
+      failedAttempts: 0
+    }
+    //return state;
   }
   else if (action.type === TRY_LETTER) {
-    //
-    return state;
+    const newLetter = action.payload;
+    if (previousAttemptedLetters(state.attemptedLetters, newLetter)) {
+      return state;
+    } else {
+      const newAttemptedLetters = [...state.attemptedLetters, newLetter];
+      const newFailedAttempts = isLetterPresent(state.word, newLetter) ? state.failedAttempts : state.failedAttempts + 1;
+      const newGuessedWord = generateGuessedWord(state.word, newAttemptedLetters);
+      return {
+        ...state,
+        attemptedLetters: newAttemptedLetters,
+        guessedWord: newGuessedWord,
+        failedAttempts: newFailedAttempts
+      }
+    } return state;
   }
-  return state;
 }
