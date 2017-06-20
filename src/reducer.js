@@ -31,7 +31,7 @@ export default (state, action) => {
     return {
       word: newWord,
       guessedWord: generateGuessedWord(newWord, newAttemptedLetters),
-      attemptedLetters: newAttemptedLetters
+      attemptedLetters: newAttemptedLetters,
       failedAttempts: 0
     }
     //return state;
