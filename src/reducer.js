@@ -1,16 +1,16 @@
 import { NEW_GAME, TRY_LETTER } from './actions';
 
-const generateGuessedWord = (word, letters) => {
+export const generateGuessedWord = (word, letters) => {
   return word.split("").map((letter) => {
     return previousAttemptedLetters(letters, letter) ? letter : "_"
   }).join("")
 }
 
-const previousAttemptedLetters = (attemptedLetters, letter) => {
+export const previousAttemptedLetters = (attemptedLetters, letter) => {
   return attemptedLetters.indexOf(letter) >= 0
 }
 
-const isLetterPresent = (word, letter) => {
+export const isLetterPresent = (word, letter) => {
   return word.indexOf(letter) >= 0
 }
 
@@ -34,7 +34,7 @@ export default (state, action) => {
       attemptedLetters: newAttemptedLetters,
       failedAttempts: 0
     }
-    //return state;
+    return state;
   }
   else if (action.type === TRY_LETTER) {
     const newLetter = action.payload;
@@ -51,5 +51,7 @@ export default (state, action) => {
         failedAttempts: newFailedAttempts
       }
     } return state;
+  } else {
+    return state;
   }
 }

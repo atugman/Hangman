@@ -1,128 +1,115 @@
-import React, { Component } from 'react';
-import logo from './logo.svg';
-import './App.css';
-import Word from './word'
+import React, { Component, PropTypes } from 'react';
+import '../App.css';
+import { newWord } from '../actions';
+import { connect } from 'react-redux';
+import store from '../store'
+import {words} from '../store';
+import Image from '../components/Image';
+import Spaces from '../components/Spaces';
+import Text from '../components/Text';
+import NewGameButton from '../components/Button'
+import Attempts from '../containers/Attempts'
+import DisplayedWord from '../containers/DisplayedWord'
+import Hangman from '../containers/Hangman'
+import Letters from '../containers/Letters'
 
 class App extends Component {
   constructor() {
-    super();
-        // moved to reducer
-    // this.state = {
-    //   word: 'TUGMAN',
-    //   guessedLetters: '',//guessed letters is an array of objects
-    //   //class for true and false
-    //   correctLetters: 'ABCD',
-    //   incorrectLetters: '',
-    //   class: true
-    // }
-    //choose random-ish word
-    //render the word initially
-    //style it so that text is white and
-
-    this.handleChange = this.handleChange.bind(this);
-    this.handleSubmit = this.handleSubmit.bind(this);
+    super()
+    this.state = {
+      word: 'hey',
+      guessedWord: undefined,
+      attemptedLetters: [],
+      failedAttempts: 0
+    }
   }
 
-      handleChange(event) {
-        this.setState({
-          userInput: event.target.value,
-          splitWord: this.state.word.split(''),
-          //numberOfLetters: this.state.word.length()
-          firstLetter: this.state.word[0],
-          secondLetter: this.state.word[1],
-          thirdLetter: this.state.word[2],
-          fourthLetter: this.state.word[3],
-          fifthLetter: this.state.word[4],
-          sixthLetter: this.state.word[5],
-          seventhLetter: this.state.word[6],
-          eighthLetter: this.state.word[7],
-        });
-      }
+  static propTypes = {
+    word: PropTypes.string,
+    started: PropTypes.bool,
+    victory: PropTypes.bool,
+    defeat: PropTypes.bool
+  }
 
-      handleSubmit(event) {
-      //   this.setState({
-          //may not need this
-        // letter1: this.state.word.split('')[0],
-        // letter2: this.state.word.split('')[1],
-        // letter3: this.state.word.split('')[2],
-        // letter4: this.state.word.split('')[3],
-        // letter5: this.state.word.split('')[4],
-        // letter6: this.state.word.split('')[5],
-        // letter7: this.state.word.split('')[6],
-        // hey: 'it worked'
-      // });
-      if (this.state.word.includes(this.state.userInput)) {
-        // for (var i = 0; i < this.state.splitWord; i++) {
-        //   if (i = )
-        // }
-        // this.state.splitWord.forEach(function(letter, index){
-        //   if (letter =
-        // })
-        // for (let i in this.state.splitWord) {
-        //   console.log('here ', i); // logs "0", "1", "2", "foo"
-        // }
-        this.setState({
-          guessedLetters: this.state.guessedLetters + this.state.userInput,
-          correctLetters: this.state.correctLetters + this.state.userInput,
-          userInput: ''
-        })
-      } else {
-        this.setState({
-          guessedLetters: this.state.guessedLetters + this.state.userInput,
-          incorrectLetters: this.state.incorrectLetters + this.state.userInput,
-          userInput: ''
-        })
-      }
-      // else if () {
-      //   this.setState({
-      //
-      //   })
-      // }
-      event.preventDefault();
-    }
-        //get user input from above
-        //assign to variable?
-        //split word
-        //UPDATE STATE with the split word
-        //create array of empty strings based on split word so that you have the letter count
-        //UPDATE STATE with that array of empty strings
-        //render the empty strings with the lines under/over them
-        //loop over array containing the letters of the word
-        //if userInput = word[i]
-        //update state.relevantLetter with word[i]
-        //else - post userinput on the side so they know what they've chosen
-        //then
-
-
+  getLetters() {
+    return ["a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k", "l", "m", "n", "o", "p", "q", "r", "s", "t", "u", "v", "w", "x", "y", "z"]
+  }
 
   render() {
+    if (this.props.started) {
+      if (this.props.victory) {
+        return this.renderVictory()
+      } else if (this.props.defeat) {
+        return this.renderDefeat()
+      } else {
+        return this.renderGame()
+      }
+    } else {
+      return this.renderStart()
+    }
+  }
+
+  renderStart() {
+    return <p>{this.renderNewGameButton()}</p>
+  }
+
+  renderGame() {
     return (
-      <div className="App">
-        <div className="App-header">
-          <img src={logo} className="App-logo" alt="logo" />
-          <h2>Welcome to React</h2>
-        </div>
+      <div>
+        <p><DisplayedWord /></p>
+        <p><Hangman /></p>
+        <p>Attempts: <Attempts /></p>
+        <p>
+          {
+            this.getLetters().map((letter, index) => {
+              return <Letters key={index} label={letter} />;
+            })
+          }
+        </p>
+        <p>{this.renderNewGameButton()}</p>
+      </div>
+    )
+  }
 
-        <form onSubmit={this.handleSubmit}>
-         <label>
-           Guess a Letter:
-           {/* <input type="text" value={this.state.userInput} onChange={this.handleChange} /> */}
-         </label>
-         <input type="submit" value="Submit" />
-       </form>
-       {/* <Word word={this.state.word.split('')} correctLetters={this.state.correctLetters} /> */}
-         {/* <div className={this.state.class}> */}
-           {/* <li>{this.state.word[0]}</li>
-           <li>{this.state.word[1]}</li>
-           <li>{this.state.word[2]}</li>
-           <li>{this.state.word[3]}</li>
-           <li>{this.state.word[4]}</li>
-           <li>{this.state.word[5]}</li> */}
-{/* {onSubmit={this.setState({clicked: !this.state.clicked})} */}
-         </div>
+  renderNewGameButton() {
+    return <NewGameButton label="New Game" onClick={this.props.onNewGameClick} />
+  }
 
-    );
+  renderVictory() {
+    return (
+      <div>
+        <p><DisplayedWord /></p>
+        <p>You won!</p>
+        <p>{this.renderNewGameButton()}</p>
+      </div>
+    )
+  }
+
+  renderDefeat() {
+    return (
+      <div>
+        <p><Hangman /></p>
+        <p>Sorry, you lost! The word was: <strong>{this.props.word}</strong></p>
+        <p>{this.renderNewGameButton()}</p>
+      </div>
+    )
   }
 }
 
-export default App;
+const mapStateToProps = (state) => {
+console.log(state);
+  return {
+  word: state.word,
+  started: !!state.word,
+  victory: state.word === state.guessedWord,
+  defeat: state.failedAttempts >= 6
+}
+};
+
+const mapDispatchToProps = (dispatch) => ({
+  onNewGameClick: () => {
+    dispatch(newWord(words[Math.floor(Math.random() * words.length)]));
+  }
+})
+
+export default connect(mapStateToProps, mapDispatchToProps)(App);
