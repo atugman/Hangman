@@ -3,8 +3,7 @@ import thunk from 'redux-thunk';
 import reducer from './reducer';
 
 export const words = [
-  "hey",
-  "hi"
+  "daisy"
 ]
 
 // const defaultState = {

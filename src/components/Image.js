@@ -7,7 +7,7 @@ class HangmanImage extends React.Component {
 
   render() {
     return (
-      <div> hey </div>
+      <img src={require(`../img/hangman${this.props.level}.gif`)} />
     )
   }
 }
