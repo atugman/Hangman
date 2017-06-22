@@ -12,6 +12,9 @@ import Attempts from '../containers/Attempts'
 import DisplayedWord from '../containers/DisplayedWord'
 import Hangman from '../containers/Hangman'
 import Letters from '../containers/Letters'
+import Game from '../components/Game'
+import Defeat from '../components/Defeat'
+import Victory from '../components/Victory'
 
 class App extends Component {
   constructor() {
@@ -38,66 +41,65 @@ class App extends Component {
   render() {
     if (this.props.started) {
       if (this.props.victory) {
-        return this.renderVictory()
+        return <Victory />
       } else if (this.props.defeat) {
-        return this.renderDefeat()
+        return <Defeat />
       } else {
-        return this.renderGame()
+        return <Game />
       }
     } else {
-      return this.renderStart()
+      return <NewGameButton label="New Game" onClick={this.props.onNewGameClick} />
     }
   }
 
-  renderStart() {
-    return <p>{this.renderNewGameButton()}</p>
-  }
+  // renderStart() {
+  //   return <p><NewGameButton label="New Game" onClick={this.props.onNewGameClick} /></p>
+  // }
 
-  renderGame() {
-    return (
-      <div>
-        <p><DisplayedWord /></p>
-        <p><Hangman /></p>
-        <p>Attempts: <Attempts /></p>
-        <p>
-          {
-            this.getLetters().map((letter, index) => {
-              return <Letters key={index} label={letter} />;
-            })
-          }
-        </p>
-        <p>{this.renderNewGameButton()}</p>
-      </div>
-    )
-  }
+  // renderGame() {
+  //   return (
+  //     <div>
+  //       <p><DisplayedWord /></p>
+  //       <p><Hangman /></p>
+  //       <p>Attempts: <Attempts /></p>
+  //       <p>
+  //         {
+  //           this.getLetters().map((letter, index) => {
+  //             return <Letters key={index} label={letter} />;
+  //           })
+  //         }
+  //       </p>
+  //       <p><NewGameButton label="New Game" onClick={this.props.onNewGameClick} /></p>
+  //     </div>
+  //   )
+  // }
 
-  renderNewGameButton() {
-    return <NewGameButton label="New Game" onClick={this.props.onNewGameClick} />
-  }
+  // renderNewGameButton() {
+  //   return <NewGameButton label="New Game" onClick={this.props.onNewGameClick} />
+  // }
 
-  renderVictory() {
-    return (
-      <div>
-        <p><DisplayedWord /></p>
-        <p>You won!</p>
-        <p>{this.renderNewGameButton()}</p>
-      </div>
-    )
-  }
+  // renderVictory() {
+  //   return (
+  //     <div>
+  //       <p><DisplayedWord /></p>
+  //       <p>You won!</p>
+  //       <p><NewGameButton label="New Game" onClick={this.props.onNewGameClick} /></p>
+  //     </div>
+  //   )
+  // }
 
-  renderDefeat() {
-    return (
-      <div>
-        <p><Hangman /></p>
-        <p>Sorry, you lost! The word was: <strong>{this.props.word}</strong></p>
-        <p>{this.renderNewGameButton()}</p>
-      </div>
-    )
-  }
+  // renderDefeat() {
+  //   return (
+  //     <div>
+  //       <p><Hangman /></p>
+  //       <p>Sorry, you lost! The word was: <strong>{this.props.word}</strong></p>
+  //       <p><NewGameButton label="New Game" onClick={this.props.onNewGameClick} /></p>
+  //     </div>
+  //   )
+  // }
 }
 
 const mapStateToProps = (state) => {
-console.log(state);
   return {
   word: state.word,
   started: !!state.word,
