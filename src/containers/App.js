@@ -17,15 +17,15 @@ import Defeat from '../components/Defeat'
 import Victory from '../components/Victory'
 
 class App extends Component {
-  constructor() {
-    super()
-    this.state = {
-      word: 'hey',
-      guessedWord: undefined,
-      attemptedLetters: [],
-      failedAttempts: 0
-    }
-  }
+  // constructor() {
+  //   super()
+  //   // this.state = {
+  //   //   word: undefined,
+  //   //   guessedWord: undefined,
+  //   //   attemptedLetters: [],
+  //   //   failedAttempts: 0
+  //   // }
+  // }
 
   static propTypes = {
     word: PropTypes.string,
@@ -41,9 +41,9 @@ class App extends Component {
   render() {
     if (this.props.started) {
       if (this.props.victory) {
-        return <Victory />
+        return <Victory label="New Game" onClick={this.props.onNewGameClick} />
       } else if (this.props.defeat) {
-        return <Defeat />
+        return <Defeat label="New Game" onClick={this.props.onNewGameClick} />
       } else {
         return <Game />
       }
@@ -99,14 +99,14 @@ class App extends Component {
   // }
 }
 
-const mapStateToProps = (state) => {
-  return {
-  word: state.word,
-  started: !!state.word,
-  victory: state.word === state.guessedWord,
-  defeat: state.failedAttempts >= 6
-}
-};
+// const mapStateToProps = (state) => {
+//   return {
+//   word: state.word,
+//   started: !!state.word,
+//   victory: state.word === state.guessedWord,
+//   defeat: state.failedAttempts >= 6
+// }
+// };
 
 const mapDispatchToProps = (dispatch) => ({
   onNewGameClick: () => {
@@ -114,4 +114,4 @@ const mapDispatchToProps = (dispatch) => ({
   }
 })
 
-export default connect(mapStateToProps, mapDispatchToProps)(App);
+export default connect(mapDispatchToProps)(App);

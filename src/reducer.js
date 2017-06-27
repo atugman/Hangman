@@ -1,18 +1,21 @@
 import { NEW_GAME, TRY_LETTER } from './actions';
+import generateGuessedWord from './containers/Letters';
+import previousAttemptedLetters from './containers/Letters';
+import isLetterPresent from './containers/Letters';
 
-export const generateGuessedWord = (word, letters) => {
-  return word.split("").map((letter) => {
-    return previousAttemptedLetters(letters, letter) ? letter : "_"
-  }).join("")
-}
-
-export const previousAttemptedLetters = (attemptedLetters, letter) => {
-  return attemptedLetters.indexOf(letter) >= 0
-}
-
-export const isLetterPresent = (word, letter) => {
-  return word.indexOf(letter) >= 0
-}
+// export const generateGuessedWord = (word, letters) => {
+//   return word.split("").map((letter) => {
+//     return previousAttemptedLetters(letters, letter) ? letter : "_"
+//   }).join("")
+// }
+//
+// export const previousAttemptedLetters = (attemptedLetters, letter) => {
+//   return attemptedLetters.indexOf(letter) >= 0
+// }
+//
+// export const isLetterPresent = (word, letter) => {
+//   return word.indexOf(letter) >= 0
+// }
 
 const initialState = {
   word: '',
@@ -20,7 +23,8 @@ const initialState = {
   guessedLetters: [],
   correctLetters: [],
   incorrectLetters: [],
-  failedAttempts: 0
+  failedAttempts: 0,
+  words: ['daisy']
 }
 
 export default (state, action) => {
@@ -30,7 +34,7 @@ export default (state, action) => {
     const newAttemptedLetters = [];
     return {
       word: newWord,
-      guessedWord: generateGuessedWord(newWord, newAttemptedLetters),
+      guessedWord: '',//generateGuessedWord(newWord, newAttemptedLetters),
       attemptedLetters: newAttemptedLetters,
       failedAttempts: 0
     }
