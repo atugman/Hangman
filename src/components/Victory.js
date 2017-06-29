@@ -1,7 +1,6 @@
 import React, { PropTypes } from 'react';
 import DisplayedWord from '../containers/DisplayedWord'
 import NewGameButton from '../components/Button'
-//import mapDispatchToProps from '../containers/App'
 import { newWord } from '../actions';
 import words from '../store';
 import { connect } from 'react-redux';

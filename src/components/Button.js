@@ -23,11 +23,11 @@ class NewGameButton extends React.Component {
   //   return word.indexOf(letter) >= 0
   // }
 
-  static propTypes = {
-    label: PropTypes.string,
-    active: PropTypes.bool,
-    onClick: PropTypes.func
-  }
+  // static propTypes = {
+  //   label: PropTypes.string,
+  //   active: PropTypes.bool,
+  //   onClick: PropTypes.func
+  // }
 
   static defaultProps = {
     active: true

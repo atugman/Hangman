@@ -34,22 +34,11 @@ class App extends Component {
     defeat: PropTypes.bool
   }
 
-  getLetters() {
-    return ["a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k", "l", "m", "n", "o", "p", "q", "r", "s", "t", "u", "v", "w", "x", "y", "z"]
-  }
-
+  // getLetters() {
+  //   return ["a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k", "l", "m", "n", "o", "p", "q", "r", "s", "t", "u", "v", "w", "x", "y", "z"]
+  // }
   render() {
-    if (this.props.started) {
-      if (this.props.victory) {
-        return <Victory label="New Game" onClick={this.props.onNewGameClick} />
-      } else if (this.props.defeat) {
-        return <Defeat label="New Game" onClick={this.props.onNewGameClick} />
-      } else {
-        return <Game />
-      }
-    } else {
-      return <NewGameButton label="New Game" onClick={this.props.onNewGameClick} />
-    }
+    return <Game />
   }
 
   // renderStart() {
@@ -108,10 +97,10 @@ class App extends Component {
 // }
 // };
 
-const mapDispatchToProps = (dispatch) => ({
-  onNewGameClick: () => {
-    dispatch(newWord(words[Math.floor(Math.random() * words.length)]));
-  }
-})
+// const mapDispatchToProps = (dispatch) => ({
+//   onNewGameClick: () => {
+//     dispatch(newWord(words[Math.floor(Math.random() * words.length)]));
+//   }
+// })
 
-export default connect(mapDispatchToProps)(App);
+export default App//connect(mapDispatchToProps)(App);
